@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin login</title>
+     <meta charset="UTF-8">
+       <link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+        <!--<link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet"> -->
+        <style>
+            div {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -moz-transform: translateX(-50%) translateY(-50%);
+                -webkit-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+            }
+
+          .container {
+                     position: absolute;
+                      right: 0;
+                        margin: 20px;
+                      max-width: 350px;
+                      padding: 16px;
+                         background-color: white;
+                    }
+          .btn {
+                     background-color: #4CAF50;
+                     color: white;
+                      padding: 16px 20px;
+                     border: none;
+                     cursor: pointer;
+                     width: 100%;
+                      opacity: 0.9;
+                }
+
+            .btn:hover {
+                         opacity: 1;
+                        }
+            input[type=text], input[type=password] {
+                                                 width: 100%;
+                                                padding: 15px;
+                                                 margin: 5px 0 22px 0;
+                                                 border: none;
+                                                 background: #f1f1f1;
+                                                    }
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+        </style>
+</head>
+<body>
+<center>
+    <div class="container">
+        <span>
+<table>
+    <form method='post' class="container">
+     <h1>Login</h1>
+        <tr>{{ msg }}
+            <td>Username:
+            <input type='text' name='uname' pattern='[A-Za-z]{4,}' title='only alphabets allowed(more than 4)'></td>
+        </tr>
+        <tr>
+            <td>Password:
+            <input type='password' name='password' pattern='.{8,}' title='Eight or more characters'></td>
+        </tr>
+        <!--<tr><td>Login as:</td><td><select name='loginAs' ><option value='0'>User</option><option value='1'>Manager</option><option value='2'>Admin</option></select></td></tr>  -->
+        <tr>
+            <td colspan='2'><input type='submit' name='submit' value='login'  class='btn' ><br/></td>
+        </tr>
+        <tr>
+            <!--<td colspan='2' style="text-align: center"><a href="{{ url_for('signup')}}" >Signup</a></td>-->
+        </tr>
+    </form>
+</table>
+        </span>
+        </div>
+
+    </center>
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
+</body>
+</html>

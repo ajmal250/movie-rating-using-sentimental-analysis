@@ -160,6 +160,54 @@ def about():
 def usercontact():
     return render_template('contactuser.html')
 
+@app.route("/admin")
+def adminlog():
+    return render_template('adminlogin.html')
+
+@app.route('/admin',methods=['POST'])
+def adminlogin():
+    name=request.form['uname']
+    password=request.form['password']
+    msg=''
+    if name!='' and password !='':
+        conn=mysql.connect()
+        cur=conn.cursor()
+        cur.execute('''SELECT * FROM user WHERE username=%s AND password=%s AND type=1''',(name,password))
+        account = cur.fetchone()
+        if account:
+            session['loggedin'] = True
+            session['id'] = account[0]
+            session['username'] = account[1]
+            return render_template('adminpage.html')
+        else:
+            msg='Incorrect username/password!'
+    return render_template('adminlogin.html', msg=msg)
+
+@app.route('/addmovie')
+def addmovie():
+    return render_template('addmovie.html')
+
+@app.route('/editmovie')
+def editmovie():
+    return render_template('editmovie.html')
+
+@app.route('/viewuser')
+def viewuser():
+    return render_template('viewuser.html')
+
+@app.route('/deletemovie')
+def deletemovie():
+    return render_template('deletemovie.html')
+
+@app.route('/ratemovie')
+def ratemovie():
+    return render_template('ratemovie.html')
+
+
+@app.route('/adminpage')
+def adminpage():
+    return render_template('adminpage.html')
+
 
 
 if __name__ == "__main__":
