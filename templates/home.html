@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>home</title>
+   <!--   <style>
+    body{
+        background-image:url('/static/image/bg2.jpg');
+        background-attachment: fixed;
+    }
+    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css"> -->
+    <meta charset="UTF-8">
+    <!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<!--<nav class="w3-bar w3-black">
+  <a href="{{ url_for('home') }}" class="w3-button w3-bar-item">Home</a>
+  <a href="{{ url_for('movie') }}" class="w3-button w3-bar-item">movie</a>
+    <a href="{{ url_for('rating') }}" class="w3-button w3-bar-item">rating</a>
+    <a href="{{ url_for('login') }}" class="w3-button w3-bar-item">login</a>
+     <a href="{{ url_for('contact') }}" class="w3-button w3-bar-item">contact</a>
+</nav>
+<section>
+  <img class="mySlides" src="img_la.jpg" style="width:100%">
+  <img class="mySlides" src="img_ny.jpg" style="width:100%">
+  <img class="mySlides" src="img_chicago.jpg" style="width:100%">
+</section>
+<footer class="w3-container w3-padding-64 w3-center w3-black w3-xlarge">
+  <a href="#"><i class="fa fa-facebook-official"></i></a>
+  <a href="#"><i class="fa fa-pinterest-p"></i></a>
+  <a href="#"><i class="fa fa-twitter"></i></a>
+  <a href="#"><i class="fa fa-flickr"></i></a>
+  <a href="#"><i class="fa fa-linkedin"></i></a>
+</footer>
+-->
+{% include 'homepageheader.html' %}
+			<main class="main-content">
+				<div class="container">
+					<div class="page">
+						<div class="row">
+							<div class="col-md-9">
+								<div class="slider">
+									<ul class="slides">
+										<li><a href="#"><img src="{{ url_for('static', filename='images/movie7.jpg') }}" alt="Slide 1"></a></li>
+										<li><a href="#"><img src="{{ url_for('static', filename='images/movie8.jpg') }}" alt="Slide 2"></a></li>
+										<li><a href="#"><img src="{{ url_for('static', filename='images/movie9.jpg') }}" alt="Slide 3"></a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-sm-6 col-md-12">
+										<div class="latest-movie">
+											<a href="#"><img src="{{ url_for('static', filename='image/thumb1.jpg') }}" alt="Movie 1"></a>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-12">
+										<div class="latest-movie">
+											<a href="#"><img src="{{ url_for('static', filename='image/thumb2.jpg') }}" alt="Movie 2"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- .row -->
+						<div class="row">
+							<div class="col-sm-6 col-md-3">
+								<div class="latest-movie">
+									<a href="#"><img src="{{ url_for('static', filename='image/thumb3.jpg') }}" alt="Movie 3"></a>
+								</div>
+							</div>
+							<div class="col-sm-6 col-md-3">
+								<div class="latest-movie">
+									<a href="#"><img src="{{ url_for('static', filename='image/thumb4.jpg') }}" alt="Movie 4"></a>
+								</div>
+							</div>
+							<div class="col-sm-6 col-md-3">
+								<div class="latest-movie">
+									<a href="#"><img src="{{ url_for('static', filename='image/thumb5.jpg') }}" alt="Movie 5"></a>
+								</div>
+							</div>
+							<div class="col-sm-6 col-md-3">
+								<div class="latest-movie">
+									<a href="#"><img src="{{ url_for('static', filename='image/thumb6.jpg') }}" alt="Movie 6"></a>
+								</div>
+							</div>
+						</div>
+            </main>
+    {% include 'footer.html' %}
+
+		<script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
