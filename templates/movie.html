@@ -16,7 +16,26 @@
 				<div class="container">
 					<div class="page">
 						<div class="row">
-<h2 style="color: #e0a800">movie page</h2>
+                            <h2 style="color: #e0a800">movie page</h2>
+                            <table class="table">
+                                 <thead class="thead-dark">
+                                   <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                     <th scope="col">rating</th>
+                                      </tr>
+                                 </thead>
+                                 <tbody>
+                                  {% for row in mydata %}
+                                     <tr>
+                                         <td> {{row[1]}} </td>
+                                         <td> {{row[2]}} </td>
+                                         <td>{{row[3]}}</td>
+                                      </tr>
+                                      {% endfor %}        <!-- Because it is flask framework there would be other keywords like 'endfor'   -->
+                                </tbody>
+                            </table>
+
                              </div>
 							</div>
 						</div>

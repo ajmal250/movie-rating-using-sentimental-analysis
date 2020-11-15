@@ -51,7 +51,7 @@ def signuppost():
         cur=conn.cursor()
         #cur.execute('''SELECT MAX(userid) FROM user''')
         #maxid=cur.fetchone()
-        cur.execute('''INSERT INTO user (username,password) VALUES (%s,%s)''',(name,password))
+        cur.execute('''INSERT INTO user (username,password,type) VALUES (%s,%s,'0')''',(name,password))
         cur.close()
         exe='user : '+name+' created'
     else:
@@ -66,7 +66,11 @@ def contact():
 
 @app.route("/movie")
 def movie():
-    return render_template('movie.html')
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM movie''')
+    data = cur.fetchall()
+    return render_template('movie.html',mydata=data)
 
 
 @app.route('/rating')
@@ -83,12 +87,37 @@ def ratingpost():
 
 @app.route('/userrating')
 def userrating():
-    return render_template('userrating.html')
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM movie''')
+    data = cur.fetchall()
+    return render_template('userrating.html', mydata=data)
+
+
+@app.route('/userrating',methods=['POST'])
+def userrating_post():
+    userid = request.form['userid']
+    movieid = request.form['movieid']
+    review = request.form['review']
+    if review =='':
+        exe='enter review!!!'
+    else:
+        conn = mysql.connect()
+        cur = conn.cursor()
+        cur.execute('''INSERT INTO comment (userid,movieid,comment,score) VALUES (%s,%s,%s,'0')''', (userid,movieid,review))
+        cur.close()
+        exe = 'review added !!!'
+    return render_template('user.html',data=exe)
 
 
 @app.route('/usermovie')
 def usermovie():
-    return render_template('usermovie.html')
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM movie''')
+    data = cur.fetchall()
+    cur.close()
+    return render_template('usermovie.html',mydata=data)
 
 
 @app.route('/userrating',methods=['POST'])
@@ -119,6 +148,7 @@ def logincheck():
         cur=conn.cursor()
         cur.execute('''SELECT * FROM user WHERE username=%s AND password=%s''',(name,password))
         account = cur.fetchone()
+        cur.close()
         if account:
             session['loggedin'] = True
             session['id'] = account[0]
@@ -174,6 +204,7 @@ def adminlogin():
         cur=conn.cursor()
         cur.execute('''SELECT * FROM user WHERE username=%s AND password=%s AND type=1''',(name,password))
         account = cur.fetchone()
+        cur.close()
         if account:
             session['loggedin'] = True
             session['id'] = account[0]
@@ -183,9 +214,34 @@ def adminlogin():
             msg='Incorrect username/password!'
     return render_template('adminlogin.html', msg=msg)
 
+
 @app.route('/addmovie')
 def addmovie():
     return render_template('addmovie.html')
+
+
+
+@app.route('/addmovie',methods=['POST'])
+def addmovie_post():
+    name = request.form['moviename']
+    description = request.form['description']
+    msg = ''
+    if name =='':
+        exe='enter movie name!!!'
+    elif description =='':
+        exe='enter description!!!'
+    else:
+        conn=mysql.connect()
+        cur=conn.cursor()
+        #cur.execute('''SELECT MAX(userid) FROM user''')
+        #maxid=cur.fetchone()
+        cur.execute('''INSERT INTO movie (moviename,description) VALUES (%s,%s)''',(name,description))
+        cur.close()
+        exe='movie : '+name+' added'
+    return render_template('addmovie.html',msg=exe)
+
+
+
 
 @app.route('/editmovie')
 def editmovie():
@@ -193,7 +249,12 @@ def editmovie():
 
 @app.route('/viewuser')
 def viewuser():
-    return render_template('viewuser.html')
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM user WHERE type=0''')
+    data=cur.fetchall()
+    cur.close()
+    return render_template('viewuser.html',mydata=data)
 
 @app.route('/deletemovie')
 def deletemovie():
@@ -201,7 +262,47 @@ def deletemovie():
 
 @app.route('/ratemovie')
 def ratemovie():
-    return render_template('ratemovie.html')
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM movie''')
+    data = cur.fetchall()
+    cur.close()
+    return render_template('ratemovie.html',mydata=data)
+
+
+@app.route('/ratemovie',methods=['POST'])
+def ratemovie_post():
+    count=0
+    total=0
+    rate=0
+    movieid = request.form['movieid']
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute('''SELECT comment FROM comment where movieid = %s''',(movieid))
+    data=cur.fetchall()
+    for cm in data:
+        count=count+1
+        sent = TextBlob(cm[0]).sentiment.polarity
+        if(sent<=0):
+            sent=0
+        else:
+            sent=1
+        total=total+sent
+    if(total<=0):
+        rate=1
+    else:
+        rate=total/count*3
+        if rate>0 and rate <1:
+            rate=1
+        elif rate>1 and rate <2:
+            rate=2
+        else:
+            rate=3
+    cur.execute('''INSERT INTO rating (movieid,rating) VALUES (%s,%s)''', (movieid,rate))
+    cur.execute('''UPDATE movie SET rate = %s WHERE movieid = %s''',(rate,movieid))
+    cur.close()
+    exe = 'rating added !!!'
+    return render_template('adminpage.html',data=exe)
 
 
 @app.route('/adminpage')

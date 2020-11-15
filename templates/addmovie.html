@@ -18,6 +18,24 @@
 				<div class="container">
 					<div class="page">
                         <h2>add movie</h2>
+                        <table>
+                           <form method='post' class="container">
+                               <tr>{{ msg }}
+                                <td>Movie name:
+                                <input  class="form-control" type='text' name='moviename' ><br></td>
+                                </tr>
+                                <tr>
+                                <td>Description:
+                                <textarea  class="form-control" id="description" name="description" rows="4" cols="50">
+                                </textarea>
+                                    <br>
+                                </tr>
+                                 <!--<tr><td>Login as:</td><td><select name='loginAs' ><option value='0'>User</option><option value='1'>Manager</option><option value='2'>Admin</option></select></td></tr>  -->
+                                  <tr>
+                                  <td colspan='2'><input type='submit' name='submit' value='Add movie'  class="btn btn-primary" ><br/></td>
+                                   </tr>
+                                   </form>
+                                    </table>
                          </div>
                 </div>
             </main>
